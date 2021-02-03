@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
+import { fetchPlugin } from './plugins/fetch-plugin';
 
 function App() {
   const ref = useRef<any>();
@@ -23,7 +24,9 @@ function App() {
       entryPoints: ['index.js'],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin()],
+      // we place the path plugin first,
+      // because esbuild runs onResolve before onBuild
+      plugins: [unpkgPathPlugin(), fetchPlugin(input)],
       define: {
         'process.env.NODE_ENV': '"production"',
         global: 'window',
@@ -38,7 +41,7 @@ function App() {
     // the initialization
     ref.current = await esbuild.startService({
       worker: true,
-      wasmURL: '/esbuild.wasm',
+      wasmURL: 'https://unpkg/esbuild-wasm@0.8.27/esbuild.wasm',
     });
   };
 
