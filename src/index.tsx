@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import CodeCell from './components/code-cell';
+import React from "react";
+import ReactDOM from "react-dom";
+import CodeCell from "./components/code-cell";
+import TextEditor from "./components/text-editor";
 
 function App() {
-
   // ${code}
   return (
     <div>
-      <CodeCell />
+      <TextEditor />
     </div>
   );
 }
 
-ReactDOM.render(<App />, document.querySelector('#root'));
+ReactDOM.render(<App />, document.querySelector("#root"));

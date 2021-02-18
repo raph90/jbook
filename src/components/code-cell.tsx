@@ -8,13 +8,21 @@ function CodeCell() {
   //input
   const [input, setInput] = useState("");
   const [code, setCode] = useState("");
+  const [error, setError] = useState("");
   // output
 
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      const output = await bundler(input);
+      setCode(output.code);
+      setError(output.err);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [input]);
   //handler
-  const onClick = async () => {
-    const output = await bundler(input);
-    setCode(output);
-  };
 
   // ${code}
   return (
@@ -26,7 +34,7 @@ function CodeCell() {
             onChange={(value) => setInput(value)}
           />
         </Resizable>
-        <Preview code={code} />
+        <Preview code={code} errorMessage={error} />
       </div>
     </Resizable>
   );
