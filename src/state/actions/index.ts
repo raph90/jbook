@@ -1,33 +1,40 @@
 import { ActionType } from "../action-type";
 
-type CodeCell = "code" | "text";
+export type Direction = "up" | "down";
+export type CellType = "code" | "text";
 
-interface MoveCellAction {
+export interface MoveCellAction {
   type: ActionType.MOVE_CELL;
   payload: {
     id: string;
-    direction: "up" | "down";
+    direction: Direction;
   };
 }
 
-interface DeleteCellAction {
+export interface DeleteCellAction {
   type: ActionType.DELETE_CELL;
   payload: string;
 }
 
-interface InsertCellBeforeAction {
+export interface InsertCellBeforeAction {
   type: ActionType.INSERT_CELL_BEFORE;
   // the id of the cell which we're inserting before
   payload: {
     id: string;
-    type: CodeCell;
+    type: CellType;
   };
 }
 
-interface UpdateCellAction {
+export interface UpdateCellAction {
   type: ActionType.UPDATE_CELL;
   payload: {
     id: string;
     content: string;
   };
 }
+
+export type Action =
+  | MoveCellAction
+  | DeleteCellAction
+  | UpdateCellAction
+  | InsertCellBeforeAction;
